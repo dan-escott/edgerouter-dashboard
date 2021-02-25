@@ -56,9 +56,11 @@
       [
         "@semantic-release/github",
         {
-          "assets": [
-            "build/edgerouter-dashboard*.zip"
-          ]
+          "assets": [{
+            "path": "dist/edgerouter-dashboard*.zip",
+            "name": "edgerouter-dashboard-${nextRelease.gitTag}.zip",
+            "label": "EdgeRouter Dashboard"
+          }]
         }
       ]
     ],
