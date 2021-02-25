@@ -24,7 +24,8 @@
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "semantic-release": "semantic-release"
+    "semantic-release": "semantic-release",
+    "zip": "npm-build-zip --source=build --destination=build"
   },
   "eslintConfig": {
     "extends": [
@@ -45,6 +46,7 @@
     ]
   },
   "devDependencies": {
+    "npm-build-zip": "^1.0.3",
     "semantic-release": "^17.3.9"
   },
   "release": {
@@ -54,7 +56,9 @@
       [
         "@semantic-release/github",
         {
-          "assets": ["build/**"]
+          "assets": [
+            "build/*.zip"
+          ]
         }
       ]
     ],
