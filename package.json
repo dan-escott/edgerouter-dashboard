@@ -4,6 +4,8 @@
   "private": true,
   "homepage": "/dashboard",
   "dependencies": {
+    "@dan-escott/react-dashboard": "^2.1.1",
+    "@fortawesome/free-solid-svg-icons": "^5.15.2",
     "@testing-library/jest-dom": "^5.11.9",
     "@testing-library/react": "^11.2.5",
     "@testing-library/user-event": "^12.6.3",

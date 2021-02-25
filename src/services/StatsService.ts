@@ -2,7 +2,7 @@ import EventEmitter from "events";
 import { BufferedReader } from "./BufferedReader";
 import { Session } from "./Session";
 
-export default class StatsService extends EventEmitter {
+export class StatsService extends EventEmitter {
 
     #session;
     #buffer;

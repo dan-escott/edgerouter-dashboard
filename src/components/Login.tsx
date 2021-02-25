@@ -1,5 +1,5 @@
 import { FormEvent, useState } from 'react';
-import StatsService from '../services/StatsService';
+import { StatsService } from '../services/StatsService';
 
 export function Login(props: { statsService: StatsService }) {
   const [username, setUsername] = useState('');

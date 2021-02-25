@@ -1,18 +1,17 @@
 import React from 'react';
 import './App.css';
+import { InterfacesDashboard } from './components/stats/InterfacesDashboard';
 import { Login } from './components/Login';
-import { Interfaces } from './components/stats/Interfaces';
-import StatsService from './services/StatsService';
+import { StatsService } from './services/StatsService';
 
-export const stats = new StatsService()
+const statsService = new StatsService()
 
 function App() {
   return (
     <div className="App">
-      <header className="App-header">
-        <Login statsService={stats} />
-        <Interfaces statsService={stats} />
-      </header>
+      <Login statsService={statsService} />
+      <br />
+      <InterfacesDashboard statsService={statsService} />
     </div>
   );
 }

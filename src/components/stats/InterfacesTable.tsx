@@ -1,18 +1,8 @@
 import { useEffect, useState } from 'react';
-import StatsService from '../../services/StatsService';
+import { StatsService } from '../../services/StatsService';
+import { InterfacesData } from './InterfacesData';
 
-type InterfacesData = {
-  interfaces: {
-    [key: string]: {
-      stats: {
-        tx_bps: number,
-        rx_bps: number
-      }
-    }
-  }
-}
-
-export function Interfaces(props: { statsService: StatsService }) {
+export function InterfacesTable(props: { statsService: StatsService }) {
   const [data, setData] = useState<InterfacesData>();
 
   useEffect(
@@ -23,7 +13,7 @@ export function Interfaces(props: { statsService: StatsService }) {
       return function cleanup() {
         props.statsService.removeListener('listener', setData)
       };
-    }
+    }, [data, props.statsService]
   )
 
   if (!data) {
