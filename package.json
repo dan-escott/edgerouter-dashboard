@@ -1,5 +1,5 @@
 {
-  "name": "edgeos-client",
+  "name": "edgerouter-dashboard",
   "version": "0.0.0-development",
   "private": true,
   "homepage": "/dashboard",
@@ -57,7 +57,7 @@
         "@semantic-release/github",
         {
           "assets": [
-            "build/*.zip"
+            "build/edgerouter-dashboard*.zip"
           ]
         }
       ]
