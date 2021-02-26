@@ -15,10 +15,15 @@ Alternative dashboard for Ubiquiti EdgeRouter. The static SPA is intended to be 
 
 ## Deployment
 
-1. Run `npm run build`.
-2. Copy contents of `build` to `/var/www/htdocs/dashboard` on EdgeRouter:
+Manually copy release artifact to EdgeRouter and extract to `/var/www/htdocs/dashboard`, or run the automated deployment script from the EdgeRouter shell.
 
-    `scp -r build/* <edgerouter user>@<edgerouter server>:/var/www/htdocs/dashboard`
+* Install latest stable release
+
+    `curl -s https://raw.githubusercontent.com/dan-escott/edgerouter-dashboard/main/install.sh | bash`
+
+* Install specific version by [release tag](/releases)
+
+    `curl -s https://raw.githubusercontent.com/dan-escott/edgerouter-dashboard/main/install.sh | bash -s v1.0.0`
 
 ## Available Scripts
 
