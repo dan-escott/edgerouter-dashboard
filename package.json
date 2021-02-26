@@ -57,7 +57,7 @@
         {
           "assets": [
             {
-              "path": "build/edgerouter-dashboard.tar.gz",
+              "path": "edgerouter-dashboard.tar.gz",
               "name": "edgerouter-dashboard-${nextRelease.gitTag}.tar.gz",
               "label": "EdgeRouter Dashboard"
             }
