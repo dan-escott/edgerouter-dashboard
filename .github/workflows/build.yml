@@ -30,7 +30,8 @@ jobs:
         run: npm run build
 
       - name: Package
-        run: npm run zip
+        run: tar -czvf edgerouter-dashboard.tar.gz .
+        working-directory: ./build
 
       - name: Release
         env:

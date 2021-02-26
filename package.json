@@ -46,7 +46,6 @@
     ]
   },
   "devDependencies": {
-    "npm-build-zip": "^1.0.3",
     "semantic-release": "^17.3.9"
   },
   "release": {
@@ -56,11 +55,13 @@
       [
         "@semantic-release/github",
         {
-          "assets": [{
-            "path": "build/edgerouter-dashboard_0.0.0-development.zip",
-            "name": "edgerouter-dashboard-${nextRelease.gitTag}.zip",
-            "label": "EdgeRouter Dashboard"
-          }]
+          "assets": [
+            {
+              "path": "build/edgerouter-dashboard.tar.gz",
+              "name": "edgerouter-dashboard-${nextRelease.gitTag}.tar.gz",
+              "label": "EdgeRouter Dashboard"
+            }
+          ]
         }
       ]
     ],
