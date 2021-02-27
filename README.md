@@ -21,7 +21,7 @@ Manually copy release artifact to EdgeRouter and extract to `/var/www/htdocs/das
 
     `curl -s https://raw.githubusercontent.com/dan-escott/edgerouter-dashboard/main/install.sh | bash`
 
-* Install specific version by [release tag](/releases)
+* Install specific version by [release tag](https://github.com/dan-escott/edgerouter-dashboard/releases)
 
     `curl -s https://raw.githubusercontent.com/dan-escott/edgerouter-dashboard/main/install.sh | bash -s v1.0.0`
 
