@@ -31,6 +31,8 @@ export class StatsService extends EventEmitter {
     };
 
     #subscribe = (session: string) => {
+        this.emit('login');
+
         const subscription = {
             "SUBSCRIBE": [
                 //{ "name": "export" }, // traffic by source IP

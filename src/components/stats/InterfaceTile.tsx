@@ -46,7 +46,7 @@ export const InterfaceTile =  (props: InterfaceTileProps) => {
 
   return (
     <Tile
-      title={props.id}
+      title={props.name}
       status={healthy ? undefined : TileStatus.Stale}
       metrics={{ data: getMetrics(props.id, props.reverse, status) }}
       sparkline={getSparklineData(history)} />
