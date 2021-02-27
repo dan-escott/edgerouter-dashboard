@@ -7,6 +7,7 @@ import { InterfacesData } from "./InterfacesData";
 
 type InterfaceTileProps = {
   id: string;
+  name: string;
   reverse: boolean;
   statsService: StatsService;
 }
@@ -38,7 +39,7 @@ export const InterfaceTile =  (props: InterfaceTileProps) => {
       props.statsService.on('interfaces', onStatusChange);
 
       return function cleanup() {
-        props.statsService.removeListener('listener', onStatusChange);
+        props.statsService.removeListener('interfaces', onStatusChange);
       };
     }, [props]
   )
