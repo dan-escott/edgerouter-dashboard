@@ -11,7 +11,7 @@ export class BufferedReader extends EventEmitter {
 
         const expectedLength = +data.substring(0, data.indexOf('\n'));
         const actualLength = data.length - data.indexOf('\n') - 1;
-        if (expectedLength != actualLength) {
+        if (expectedLength !== actualLength) {
             this.dataBuffer = data;
             return;
         }
