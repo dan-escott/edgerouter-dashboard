@@ -1,12 +1,12 @@
 import { FormEvent, useState } from 'react';
-import { StatsService } from '../services/StatsService';
+import { Session } from '../services/Session';
 
-export function Login(props: { statsService: StatsService }) {
+export function Login(props: { session: Session }) {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
 
   const handleSubmit = (event: FormEvent<HTMLElement>) => {
-    props.statsService.start(username, password);
+    props.session.start(username, password);
     event.preventDefault();
   };
 

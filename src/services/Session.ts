@@ -1,9 +1,11 @@
-export class Session {
+import EventEmitter from "events";
+
+export class Session extends EventEmitter {
 
     #refreshInterval = 600; //seconds
     #key = '';
 
-    start = (username: string, password: string, onSuccess: Function) => {
+    start = (username: string, password: string) => {
 
         const credentials = `username=${username}&password=${password}`
 
@@ -17,7 +19,7 @@ export class Session {
 
         this.#makeRequest(options, { 'username': username, 'password': password }, (res: Response) => {
             this.#key = this.#getCookie('PHPSESSID') ?? '';
-            onSuccess(this.#key);
+            this.emit('login', this.#key);
             setInterval(this.#keepAlive, this.#refreshInterval * 1000);
             return res;
         });

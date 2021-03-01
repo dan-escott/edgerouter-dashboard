@@ -1,23 +1,19 @@
 import EventEmitter from "events";
 import { BufferedReader } from "./BufferedReader";
-import { Session } from "./Session";
 
 export class StatsService extends EventEmitter {
 
-    #session;
     #buffer;
     #ws?: WebSocket;
 
     constructor() {
         super();
 
-        this.#session = new Session();
-
         this.#buffer = new BufferedReader();
         this.#buffer.on('message', this.#processData);
     }
 
-    start = (username: string, password: string) => {
+    start = (session: string) => {
 
         const serverLocation = window.location;
         const protocol = (serverLocation.protocol === "https:") ? "wss:" : "ws:";
@@ -26,13 +22,11 @@ export class StatsService extends EventEmitter {
         this.#ws.onmessage = (event) => this.#buffer.receive(event.data);
         this.#ws.addEventListener('error', (err) => console.error(err));
         this.#ws.onopen = () => {
-            this.#session.start(username, password, this.#subscribe);
+            this.#subscribe(session);
         };
     };
 
     #subscribe = (session: string) => {
-        this.emit('login');
-
         const subscription = {
             "SUBSCRIBE": [
                 //{ "name": "export" }, // traffic by source IP
