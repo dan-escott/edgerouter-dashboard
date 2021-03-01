@@ -19,7 +19,7 @@ function App() {
         statsService.start(data)
       });
 
-      session.on(SessionEvent.Logout, (data) => {
+      session.on(SessionEvent.Logout, () => {
         setLogggedIn(false);
         statsService.stop();
       });
