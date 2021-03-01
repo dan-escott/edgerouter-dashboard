@@ -15,6 +15,11 @@ export class StatsService extends EventEmitter {
 
     start = (session: string) => {
 
+        if (this.#ws) {
+            console.info('Stats stream already started');
+            return;
+        }
+
         const serverLocation = window.location;
         const protocol = (serverLocation.protocol === "https:") ? "wss:" : "ws:";
 
@@ -24,6 +29,13 @@ export class StatsService extends EventEmitter {
         this.#ws.onopen = () => {
             this.#subscribe(session);
         };
+    };
+
+    stop = () => {
+        if (this.#ws) {
+            this.#ws.close();
+            this.#ws = undefined;
+        }
     };
 
     #subscribe = (session: string) => {

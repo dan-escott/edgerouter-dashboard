@@ -3,7 +3,7 @@ import './App.css';
 import { InterfacesDashboard } from './components/stats/InterfacesDashboard';
 import { Login } from './components/Login';
 import { StatsService } from './services/StatsService';
-import { Session } from './services/Session';
+import { Session, SessionEvent } from './services/Session';
 
 const session = new Session();
 const statsService = new StatsService()
@@ -14,11 +14,15 @@ function App() {
 
   useEffect(
     () => {
-      session.on('login', (data) => {
-          setLogggedIn(true);
-          statsService.start(data)
-        }
-      );
+      session.on(SessionEvent.Login, (data) => {
+        setLogggedIn(true);
+        statsService.start(data)
+      });
+
+      session.on(SessionEvent.Logout, (data) => {
+        setLogggedIn(false);
+        statsService.stop();
+      });
     }
   )
 
