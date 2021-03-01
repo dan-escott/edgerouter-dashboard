@@ -1,7 +1,7 @@
 import { useState, useEffect, useRef } from 'react';
 import { faArrowUp, faArrowDown } from '@fortawesome/free-solid-svg-icons'
 import { Tile, TileStatus } from '@dan-escott/react-dashboard';
-import { StatsService } from '../../services/StatsService';
+import { StatsService, StatsServiceEvent } from '../../services/StatsService';
 import { TimeseriesCache } from '../../data/TimeseriesCache';
 import { InterfacesData } from "./InterfacesData";
 
@@ -36,10 +36,10 @@ export const InterfaceTile =  (props: InterfaceTileProps) => {
         setStatus(data);
       }
 
-      props.statsService.on('interfaces', onStatusChange);
+      props.statsService.on(StatsServiceEvent.interfaces, onStatusChange);
 
       return function cleanup() {
-        props.statsService.removeListener('interfaces', onStatusChange);
+        props.statsService.removeListener(StatsServiceEvent.interfaces, onStatusChange);
       };
     }, [props]
   )

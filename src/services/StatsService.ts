@@ -1,6 +1,16 @@
 import EventEmitter from "events";
 import { BufferedReader } from "./BufferedReader";
 
+export enum StatsServiceEvent {
+    export = 'export', // traffic by source IP
+    discover = 'discover', // device info, IPs and MACs
+    interfaces = 'interfaces',
+    'system-stats'= 'system-stats',
+    'num-routes' = 'num-routes',
+    'config-change' = 'config-change',
+    users = 'users'
+}
+
 export class StatsService extends EventEmitter {
 
     #buffer;
@@ -41,13 +51,7 @@ export class StatsService extends EventEmitter {
     #subscribe = (session: string) => {
         const subscription = {
             "SUBSCRIBE": [
-                //{ "name": "export" }, // traffic by source IP
-                //{ "name": "discover" }, // device info, IPs and MACs
-                { "name": "interfaces" },
-                //{ "name": "system-stats" }, //uptime, cpu, mem
-                //{ "name": "num-routes" },
-                //{ "name": "config-change" },
-                { "name": "users" },
+                { "name": StatsServiceEvent.interfaces }
             ],
             "UNSUBSCRIBE": [],
             "SESSION_ID": session
@@ -59,6 +63,13 @@ export class StatsService extends EventEmitter {
     };
 
     #processData = (data: Object) => {
-        this.emit(Object.keys(data)[0], data)
+        const key = Object.keys(data)[0] as keyof typeof StatsServiceEvent;
+        const eventType = StatsServiceEvent[key];
+        if (eventType === undefined) {
+            console.warn(`Ignoring stats event key ${key}`);
+            return;
+        }
+
+        this.emit(StatsServiceEvent[key], data)
     };
 }
