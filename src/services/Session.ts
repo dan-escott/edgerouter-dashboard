@@ -13,29 +13,26 @@ export class Session extends EventEmitter {
 
     start = (username: string, password: string) => {
 
-        const credentials = `username=${username}&password=${password}`
-
-        const options = {
+        const request = new Request('/', {
             method: 'POST',
-            headers: {
-                'Content-Type': 'application/x-www-form-urlencoded',
-                'Content-Length': credentials.length
-            }
-        };
-
-        this.#makeRequest('/', options, { 'username': username, 'password': password }, (res: Response) => {
-            this.#checkSession((checkResponse) => {
-
-                if (checkResponse.status === 200) {
-                    this.#key = this.#getCookie('PHPSESSID') ?? '';
-                    this.emit(SessionEvent.Login, this.#key);
-                    this.#keepAliveTimeout = setInterval(this.#keepAlive, this.#refreshInterval * 1000);
-                }
-
-                return checkResponse;
-            });
-            return res;
+            body: new URLSearchParams({ 'username': username, 'password': password }),
         });
+
+        fetch(request)
+            .then(res => {
+                this.#checkSession(checkResponse => {
+                    if (checkResponse.status === 200) {
+                        this.#key = this.#getCookie('PHPSESSID') ?? '';
+                        this.emit(SessionEvent.Login, this.#key);
+                        this.#keepAliveTimeout = setInterval(this.#keepAlive, this.#refreshInterval * 1000);
+                    }
+                    return checkResponse;
+                });
+                return res;
+            })
+            .catch(err => {
+                console.log(err);
+            });
     };
 
     #checkSession = (callback: (res: Response) => Response) => {
@@ -44,7 +41,6 @@ export class Session extends EventEmitter {
             .catch(err => console.error(err))
     };
 
-    
     #keepAlive = () => {
         this.#checkSession((res) => {
             if (res.status === 403 && this.#key) {
@@ -55,27 +51,6 @@ export class Session extends EventEmitter {
             }
             return res;
         });
-    }
-
-    #makeRequest = (url: string, options: any, data: {}, onSuccess: (res: Response) => Response) => {
-
-        const myRequest = new Request(url, {
-            redirect: 'follow',
-            method: options.method,
-            body: Object.keys(data).length > 0 ? new URLSearchParams(data) : null,
-
-            mode: 'no-cors',
-            referrerPolicy: 'unsafe-url',
-            credentials: 'same-origin'
-        });
-
-        fetch(myRequest)
-            .then(
-                onSuccess
-            )
-            .catch(err => {
-                console.log(err);
-            });
     }
 
     #getCookie = (name: string) => {
