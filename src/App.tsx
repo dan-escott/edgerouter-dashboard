@@ -1,12 +1,19 @@
 import React, { useEffect, useState } from 'react'
-import './App.css'
+import { Tab, Tabs, TabList, TabPanel } from 'react-tabs'
 import { InterfacesDashboard } from './components/stats/InterfacesDashboard'
 import { Login } from './components/Login'
 import { StatsService } from './services/StatsService'
 import { Session, SessionEvent } from './services/Session'
+import { TopHosts } from './components/traffic/TopHosts'
+import { Treemap } from './components/traffic/TrafficTreemap'
+import { HostnameService } from './services/HostnameService'
+
+import 'react-tabs/style/react-tabs.css'
+import './App.css'
 
 const session = new Session()
 const statsService = new StatsService()
+const hostnameService = new HostnameService()
 
 const App = (): JSX.Element => {
   const [loggedIn, setLogggedIn] = useState(false)
@@ -24,7 +31,27 @@ const App = (): JSX.Element => {
   })
 
   const content = loggedIn ? (
-    <InterfacesDashboard statsService={statsService} />
+    <>
+      <Tabs>
+        <TabList>
+          <Tab>Dashboard</Tab>
+          <Tab>Analysis</Tab>
+        </TabList>
+        <TabPanel forceRender>
+          <InterfacesDashboard statsService={statsService} />
+          <TopHosts
+            statsService={statsService}
+            hostnameService={hostnameService}
+          />
+        </TabPanel>
+        <TabPanel>
+          <Treemap
+            statsService={statsService}
+            hostnameService={hostnameService}
+          />
+        </TabPanel>
+      </Tabs>
+    </>
   ) : (
     <Login session={session} />
   )
