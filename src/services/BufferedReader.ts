@@ -3,7 +3,7 @@ import { EventEmitter } from 'events'
 export class BufferedReader extends EventEmitter {
   dataBuffer = ''
 
-  receive = (data: string) => {
+  receive = (data: string): void => {
     if (this.dataBuffer) {
       data = this.dataBuffer + data
       this.dataBuffer = ''
