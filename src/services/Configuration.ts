@@ -5,7 +5,7 @@ Response from /api/edge/get.json
 interface FirewallRule {
   'default-action': string
   description: string
-  'enable-default-log'?: string
+  'enable-default-log'?: null
   rule: {
     [key: string]: {
       action: string
@@ -131,7 +131,7 @@ interface Switch {
         }
         mtu?: string
         ip?: {
-          'enable-proxy-arp'?: string
+          'enable-proxy-arp'?: null
         }
       }
     }
@@ -141,7 +141,7 @@ interface Switch {
 interface Interfaces {
   ethernet: Ethernet
   loopback: {
-    lo?: string
+    lo?: null
   }
   switch: Switch
 }
@@ -161,7 +161,7 @@ interface Protocols {
         'next-hop': {
           [key: string]: {
             description: string
-            disable?: string
+            disable?: null
           }
         }
       }
@@ -266,7 +266,7 @@ interface System {
   'name-server': string[]
   ntp: {
     server: {
-      [key: string]: string
+      [key: string]: null
     }
   }
   offload: {
