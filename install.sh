@@ -4,7 +4,8 @@ version=${1:-"latest"}
 versionlocator=$([ "$version" == "latest" ] && echo "" || echo "tags/" )
 echo "Installing EdgeRouter Dashboard $versionlocator$version"
 
-rm -rf /var/www/htdocs/dashboard/*
+rm -f /var/www/htdocs/dashboard/*.*
+rm -rf /var/www/htdocs/dashboard/static
 
 curl -s https://api.github.com/repos/dan-escott/edgerouter-dashboard/releases/$versionlocator$version \
   | grep -m 1 "browser_download_url.*edgerouter-dashboard.*tar.gz" \
