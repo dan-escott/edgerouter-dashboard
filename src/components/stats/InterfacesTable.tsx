@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { StatsService } from '../../services/StatsService'
+import { formatThroughput } from '../../services/ThoughputUtilities'
 import { InterfacesData } from './InterfacesData'
 
 export const InterfacesTable = (props: {
@@ -20,15 +21,12 @@ export const InterfacesTable = (props: {
     return <></>
   }
 
-  const formatThroughput = (n: number) => ((n * 8) / 1000000).toFixed(1)
   const formatInterface = (id: string) =>
-    `Tx: ${formatThroughput(
-      data.interfaces[id].stats.tx_bps
-    )}  Rx: ${formatThroughput(data.interfaces[id].stats.rx_bps)}`
+    `Tx: ${formatThroughput(data[id].stats.tx_bps)}
+    Rx: ${formatThroughput(data[id].stats.rx_bps)}`
   const formatInterfaceRev = (id: string) =>
-    `Tx: ${formatThroughput(
-      data.interfaces[id].stats.rx_bps
-    )}  Rx: ${formatThroughput(data.interfaces[id].stats.tx_bps)}`
+    `Tx: ${formatThroughput(data[id].stats.rx_bps)}
+    Rx: ${formatThroughput(data[id].stats.tx_bps)}`
 
   return (
     <div>

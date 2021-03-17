@@ -48,7 +48,10 @@ export class StatsService extends EventEmitter {
 
   #subscribe = (session: string): void => {
     const subscription = {
-      SUBSCRIBE: [{ name: StatsServiceEvent.interfaces }],
+      SUBSCRIBE: [
+        { name: StatsServiceEvent.interfaces },
+        { name: StatsServiceEvent.export }
+      ],
       UNSUBSCRIBE: [],
       SESSION_ID: session
     }
@@ -69,6 +72,6 @@ export class StatsService extends EventEmitter {
       return
     }
 
-    this.emit(StatsServiceEvent[key], data)
+    this.emit(StatsServiceEvent[key], (data as never)[key])
   }
 }

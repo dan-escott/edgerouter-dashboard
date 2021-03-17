@@ -4,6 +4,7 @@ import { Tile, TileStatus } from '@dan-escott/react-dashboard'
 import { StatsService, StatsServiceEvent } from '../../services/StatsService'
 import { TimeseriesCache } from '../../data/TimeseriesCache'
 import { InterfacesData } from './InterfacesData'
+import { scaleThroughput } from '../../services/ThoughputUtilities'
 
 type InterfaceTileProps = {
   id: string
@@ -38,25 +39,23 @@ const getSparklineData = (history: HistoryValue[][]) => {
   }
 }
 
-const formatThroughput = (n: number) => (n * 8) / 1000000
-
 const getMetrics = (id: string, reverse: boolean, status?: InterfacesData) => {
   const metrics = []
 
   if (status) {
-    const stats = status.interfaces[id].stats
+    const stats = status[id].stats
     const upstream = reverse ? stats.rx_bps : stats.tx_bps
     const downstream = reverse ? stats.tx_bps : stats.rx_bps
     metrics.push({
       id: 'Tx',
-      value: formatThroughput(upstream),
+      value: scaleThroughput(upstream),
       uom: 'Mbps',
       icon: faArrowUp,
       formatter: (d: number) => d.toFixed(1)
     })
     metrics.push({
       id: 'Rx',
-      value: formatThroughput(downstream),
+      value: scaleThroughput(downstream),
       uom: 'Mbps',
       icon: faArrowDown,
       formatter: (d: number) => d.toFixed(1)
@@ -79,17 +78,17 @@ export const InterfaceTile = (props: InterfaceTileProps): JSX.Element => {
 
   useEffect(() => {
     const onStatusChange = (data: InterfacesData) => {
-      const stats = data.interfaces[props.id].stats
+      const stats = data[props.id].stats
       const downstream = props.reverse ? stats.tx_bps : stats.rx_bps
       const upstream = props.reverse ? stats.rx_bps : stats.tx_bps
 
       downstreamCache.current.push({
         x: new Date(),
-        y: formatThroughput(downstream)
+        y: scaleThroughput(downstream)
       })
       upstreamCache.current.push({
         x: new Date(),
-        y: formatThroughput(upstream)
+        y: scaleThroughput(upstream)
       })
       setHistory([
         downstreamCache.current.history(),
