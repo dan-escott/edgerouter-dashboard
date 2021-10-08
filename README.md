@@ -13,7 +13,11 @@ Alternative dashboard for Ubiquiti EdgeRouter. The static SPA is intended to be 
 
     `sudo /usr/sbin/lighttpd -f /etc/lighttpd/lighttpd.conf`
 
-5. Build hostnames by copying `scan-hostnames.py` to EdgeRouter and set up cron task such as:
+5. Build hostnames by copying `scan-hostnames.py` to EdgeRouter:
+
+    `curl -s https://raw.githubusercontent.com/dan-escott/edgerouter-dashboard/main/scan-hostnames.py > scan-hostnames.py`
+    
+   and set up cron task such as:
 
     `*/10 * * * * python <path>/scan-hostnames.py`
 
